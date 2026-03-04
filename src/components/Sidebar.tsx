@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { navigation } from '@/data/navigation';
 import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
 
@@ -34,8 +35,8 @@ export default function Sidebar({ activeSection, isOpen, onClose }: SidebarProps
             <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
                 <div className="sidebar-header">
                     <div className="sidebar-logo">
-                        <div className="sidebar-logo-icon">SE</div>
-                        <span>SE Docs</span>
+                        <img src="/logo.svg" alt="ArchVault" width={32} height={32} style={{ borderRadius: '6px' }} />
+                        <span>ArchVault</span>
                     </div>
                 </div>
                 <nav className="sidebar-nav">

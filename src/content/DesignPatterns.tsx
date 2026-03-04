@@ -4,22 +4,22 @@ import MermaidDiagram from '@/components/MermaidDiagram';
 import CodeBlock from '@/components/CodeBlock';
 
 export default function DesignPatterns() {
-    return (
-        <section className="section" id="patterns">
-            <div className="section-header">
-                <div className="section-number">Module 03</div>
-                <h2>Design Patterns (Modern Context)</h2>
-            </div>
-            <p>Design patterns are reusable solutions to common software design problems, catalogued in <em>Design Patterns: Elements of Reusable Object-Oriented Software</em> (GoF, 1994). We present them here in a modern TypeScript context with anti-pattern warnings.</p>
+  return (
+    <section className="section" id="patterns">
+      <div className="section-header">
+        <div className="section-number">Module 03</div>
+        <h2>Design Patterns (Modern Context)</h2>
+      </div>
+      <p>Design patterns are reusable solutions to common software design problems, catalogued in <em>Design Patterns: Elements of Reusable Object-Oriented Software</em> (GoF, 1994). We present them here in a modern TypeScript context with anti-pattern warnings.</p>
 
-            {/* Creational */}
-            <div id="patterns-creational">
-                <h3>Creational Patterns</h3>
-                <p>Creational patterns abstract the instantiation process, making the system independent of how objects are created, composed, and represented.</p>
+      {/* Creational */}
+      <div id="patterns-creational">
+        <h3>Creational Patterns</h3>
+        <p>Creational patterns abstract the instantiation process, making the system independent of how objects are created, composed, and represented.</p>
 
-                <h4>Singleton</h4>
-                <p><strong>Problem:</strong> Ensure a class has only one instance and provide a global point of access.</p>
-                <MermaidDiagram chart={`classDiagram
+        <h4>Singleton</h4>
+        <p><strong>Problem:</strong> Ensure a class has only one instance and provide a global point of access.</p>
+        <MermaidDiagram chart={`classDiagram
     class Singleton {
       -static instance: Singleton
       -constructor()
@@ -27,7 +27,7 @@ export default function DesignPatterns() {
       +operation(): void
     }`} caption="Fig 3.1 — Singleton UML" />
 
-                <CodeBlock language="typescript" code={`class DatabaseConnection {
+        <CodeBlock language="typescript" code={`class DatabaseConnection {
   private static instance: DatabaseConnection;
   private constructor(private readonly connectionString: string) {}
 
@@ -47,15 +47,15 @@ export default function DesignPatterns() {
   }
 }`} />
 
-                <div className="antipattern">
-                    <h4>⚠️ Anti-pattern Warning</h4>
-                    <p>Singletons create hidden global state and make unit testing difficult. Prefer <strong>dependency injection</strong> with a singleton-scoped container registration instead of the class managing its own lifecycle.</p>
-                </div>
+        <div className="antipattern">
+          <h4>⚠️ Anti-pattern Warning</h4>
+          <p>Singletons create hidden global state and make unit testing difficult. Prefer <strong>dependency injection</strong> with a singleton-scoped container registration instead of the class managing its own lifecycle.</p>
+        </div>
 
-                <h4>Factory Method</h4>
-                <p><strong>Problem:</strong> Define an interface for creating objects, but let subclasses decide which class to instantiate.</p>
+        <h4>Factory Method</h4>
+        <p><strong>Problem:</strong> Define an interface for creating objects, but let subclasses decide which class to instantiate.</p>
 
-                <CodeBlock language="typescript" code={`interface Notification {
+        <CodeBlock language="typescript" code={`interface Notification {
   send(message: string): void;
 }
 
@@ -85,9 +85,9 @@ function createNotification(channel: 'email' | 'sms' | 'push'): Notification {
 const notif = createNotification('email');
 notif.send('Welcome aboard!');`} />
 
-                <h4>Builder</h4>
-                <p><strong>Problem:</strong> Construct complex objects step by step, allowing different representations from the same construction process.</p>
-                <CodeBlock language="typescript" code={`class QueryBuilder {
+        <h4>Builder</h4>
+        <p><strong>Problem:</strong> Construct complex objects step by step, allowing different representations from the same construction process.</p>
+        <CodeBlock language="typescript" code={`class QueryBuilder {
   private table = '';
   private conditions: string[] = [];
   private orderField = '';
@@ -115,17 +115,17 @@ const query = new QueryBuilder()
   .orderBy('created_at DESC')
   .limit(10)
   .build();`} />
-            </div>
+      </div>
 
-            {/* Structural */}
-            <div id="patterns-structural">
-                <h3>Structural Patterns</h3>
-                <p>Structural patterns deal with object composition, creating larger structures from individual parts while keeping them flexible and efficient.</p>
+      {/* Structural */}
+      <div id="patterns-structural">
+        <h3>Structural Patterns</h3>
+        <p>Structural patterns deal with object composition, creating larger structures from individual parts while keeping them flexible and efficient.</p>
 
-                <h4>Adapter</h4>
-                <p><strong>Problem:</strong> Convert the interface of a class into another interface clients expect. Lets classes work together that couldn&apos;t otherwise.</p>
+        <h4>Adapter</h4>
+        <p><strong>Problem:</strong> Convert the interface of a class into another interface clients expect. Lets classes work together that couldn&apos;t otherwise.</p>
 
-                <MermaidDiagram chart={`classDiagram
+        <MermaidDiagram chart={`classDiagram
     class Target {
       <<interface>>
       +request(): string
@@ -140,7 +140,7 @@ const query = new QueryBuilder()
     Target <|.. Adapter
     Adapter --> Adaptee`} caption="Fig 3.2 — Adapter Pattern UML" />
 
-                <CodeBlock language="typescript" code={`// Legacy payment processor with incompatible interface
+        <CodeBlock language="typescript" code={`// Legacy payment processor with incompatible interface
 class LegacyPaymentGateway {
   makePayment(amount: number, curr: string) {
     return { status: 'OK', ref: 'LGW-' + Date.now() };
@@ -162,10 +162,10 @@ class LegacyPaymentAdapter implements PaymentProcessor {
   }
 }`} />
 
-                <h4>Decorator</h4>
-                <p><strong>Problem:</strong> Attach additional responsibilities to an object dynamically, providing a flexible alternative to subclassing.</p>
+        <h4>Decorator</h4>
+        <p><strong>Problem:</strong> Attach additional responsibilities to an object dynamically, providing a flexible alternative to subclassing.</p>
 
-                <CodeBlock language="typescript" code={`interface Logger {
+        <CodeBlock language="typescript" code={`interface Logger {
   log(message: string): void;
 }
 
@@ -193,9 +193,9 @@ class LevelLogger implements Logger {
 const logger = new TimestampLogger(new LevelLogger(new ConsoleLogger(), 'INFO'));
 logger.log('Server started'); // [2024-01-15T10:30:00Z] [INFO] Server started`} />
 
-                <h4>Facade</h4>
-                <p><strong>Problem:</strong> Provide a simplified interface to a complex subsystem. Reduces coupling between client code and internal complexity.</p>
-                <CodeBlock language="typescript" code={`// Complex subsystem classes
+        <h4>Facade</h4>
+        <p><strong>Problem:</strong> Provide a simplified interface to a complex subsystem. Reduces coupling between client code and internal complexity.</p>
+        <CodeBlock language="typescript" code={`// Complex subsystem classes
 class VideoDecoder { decode(file: string) { return 'decoded-' + file; } }
 class AudioMixer { mix(audio: string) { return 'mixed-' + audio; } }
 class Renderer { render(video: string, audio: string) { return \`rendered(\${video},\${audio})\`; } }
@@ -216,17 +216,17 @@ class MediaConverter {
 // Client uses simple interface
 const converter = new MediaConverter();
 converter.convert('movie.mp4');`} />
-            </div>
+      </div>
 
-            {/* Behavioral */}
-            <div id="patterns-behavioral">
-                <h3>Behavioral Patterns</h3>
-                <p>Behavioral patterns characterize complex control flow and define how objects interact and distribute responsibility.</p>
+      {/* Behavioral */}
+      <div id="patterns-behavioral">
+        <h3>Behavioral Patterns</h3>
+        <p>Behavioral patterns characterize complex control flow and define how objects interact and distribute responsibility.</p>
 
-                <h4>Observer</h4>
-                <p><strong>Problem:</strong> Define a one-to-many dependency so that when one object changes state, all dependents are notified automatically. Foundation of event-driven systems.</p>
+        <h4>Observer</h4>
+        <p><strong>Problem:</strong> Define a one-to-many dependency so that when one object changes state, all dependents are notified automatically. Foundation of event-driven systems.</p>
 
-                <MermaidDiagram chart={`classDiagram
+        <MermaidDiagram chart={`classDiagram
     class EventEmitter {
       -listeners: Map
       +on(event, handler): void
@@ -246,7 +246,7 @@ converter.convert('movie.mp4');`} />
     OrderService ..> EmailService : notifies
     OrderService ..> AnalyticsService : notifies`} caption="Fig 3.3 — Observer Pattern" />
 
-                <CodeBlock language="typescript" code={`type Handler<T = unknown> = (data: T) => void;
+        <CodeBlock language="typescript" code={`type Handler<T = unknown> = (data: T) => void;
 
 class EventEmitter {
   private listeners = new Map<string, Set<Handler>>();
@@ -272,10 +272,10 @@ bus.on<{ id: string }>('order:placed', (data) => {
 });
 bus.emit('order:placed', { id: 'ORD-42' });`} />
 
-                <h4>Strategy</h4>
-                <p><strong>Problem:</strong> Define a family of algorithms, encapsulate each one, and make them interchangeable at runtime.</p>
+        <h4>Strategy</h4>
+        <p><strong>Problem:</strong> Define a family of algorithms, encapsulate each one, and make them interchangeable at runtime.</p>
 
-                <CodeBlock language="typescript" code={`interface CompressionStrategy {
+        <CodeBlock language="typescript" code={`interface CompressionStrategy {
   compress(data: Buffer): Buffer;
   name: string;
 }
@@ -308,28 +308,28 @@ const compressor = new FileCompressor(gzipStrategy);
 compressor.compress(Buffer.from('data'));
 compressor.setStrategy(brotliStrategy);
 compressor.compress(Buffer.from('data'));`} />
-            </div>
+      </div>
 
-            {/* DI & IoC */}
-            <div id="patterns-di">
-                <h3>Dependency Injection &amp; Inversion of Control</h3>
-                <p><strong>Inversion of Control (IoC)</strong> is the principle: don&apos;t call us, we&apos;ll call you. Instead of a class creating its own dependencies, they are &quot;injected&quot; from the outside. <strong>Dependency Injection (DI)</strong> is the most common implementation of IoC.</p>
+      {/* DI & IoC */}
+      <div id="patterns-di">
+        <h3>Dependency Injection &amp; Inversion of Control</h3>
+        <p><strong>Inversion of Control (IoC)</strong> is the principle: don&apos;t call us, we&apos;ll call you. Instead of a class creating its own dependencies, they are &quot;injected&quot; from the outside. <strong>Dependency Injection (DI)</strong> is the most common implementation of IoC.</p>
 
-                <MermaidDiagram chart={`graph TB
+        <MermaidDiagram chart={`graph TB
     subgraph "Without DI (Tight Coupling)"
       A1["OrderService"] -->|"creates"| B1["MySQLRepository"]
     end
     subgraph "With DI (Loose Coupling)"
       A2["OrderService"] -->|"depends on"| I["Repository Interface"]
-      I <|.. B2["MySQLRepository"]
-      I <|.. B3["PostgresRepository"]
-      I <|.. B4["InMemoryRepository"]
+      B2["MySQLRepository"] -.->|"implements"| I
+      B3["PostgresRepository"] -.->|"implements"| I
+      B4["InMemoryRepository"] -.->|"implements"| I
     end
     style A2 fill:#10b981,stroke:#059669,color:#fff
     style I fill:#6366f1,stroke:#4f46e5,color:#fff
     style A1 fill:#ef4444,stroke:#dc2626,color:#fff`} caption="Fig 3.4 — DI enables loose coupling via abstractions" />
 
-                <CodeBlock language="typescript" code={`// Define the interface (port)
+        <CodeBlock language="typescript" code={`// Define the interface (port)
 interface UserRepository {
   findById(id: string): Promise<User | null>;
   save(user: User): Promise<void>;
@@ -352,17 +352,17 @@ const service = new UserService(new PostgresUserRepository(db));
 // In tests: inject mock
 const testService = new UserService(new InMemoryUserRepository());`} />
 
-                <div className="callout tip">
-                    <strong>Benefits of DI:</strong> Testability (swap real DB for in-memory), flexibility (change implementations without changing consumers), and explicit dependencies (constructor signature documents what a class needs).
-                </div>
-            </div>
+        <div className="callout tip">
+          <strong>Benefits of DI:</strong> Testability (swap real DB for in-memory), flexibility (change implementations without changing consumers), and explicit dependencies (constructor signature documents what a class needs).
+        </div>
+      </div>
 
-            {/* Composition over Inheritance */}
-            <div id="patterns-composition">
-                <h3>Composition over Inheritance</h3>
-                <p>The GoF book itself recommends: <em>&quot;Favor object composition over class inheritance.&quot;</em> Inheritance creates rigid hierarchies; composition creates flexible, reusable building blocks.</p>
+      {/* Composition over Inheritance */}
+      <div id="patterns-composition">
+        <h3>Composition over Inheritance</h3>
+        <p>The GoF book itself recommends: <em>&quot;Favor object composition over class inheritance.&quot;</em> Inheritance creates rigid hierarchies; composition creates flexible, reusable building blocks.</p>
 
-                <CodeBlock language="typescript" code={`// ❌ Inheritance: rigid hierarchy
+        <CodeBlock language="typescript" code={`// ❌ Inheritance: rigid hierarchy
 class Animal { move() {} }
 class FlyingAnimal extends Animal { fly() {} }
 class SwimmingAnimal extends Animal { swim() {} }
@@ -387,11 +387,11 @@ class Animal {
 const duck = new Animal('Duck', [canFly, canSwim, canWalk]);
 duck.performAll(); // Flying! Swimming! Walking!`} />
 
-                <div className="antipattern">
-                    <h4>⚠️ Anti-pattern: Deep Inheritance Hierarchies</h4>
-                    <p>Inheritance trees deeper than 2-3 levels become brittle. Changes to a base class ripple unpredictably. The &quot;banana, gorilla, jungle&quot; problem: you wanted a banana, but got a gorilla holding the banana and the entire jungle.</p>
-                </div>
-            </div>
-        </section>
-    );
+        <div className="antipattern">
+          <h4>⚠️ Anti-pattern: Deep Inheritance Hierarchies</h4>
+          <p>Inheritance trees deeper than 2-3 levels become brittle. Changes to a base class ripple unpredictably. The &quot;banana, gorilla, jungle&quot; problem: you wanted a banana, but got a gorilla holding the banana and the entire jungle.</p>
+        </div>
+      </div>
+    </section>
+  );
 }
